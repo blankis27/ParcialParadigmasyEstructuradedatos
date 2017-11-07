@@ -18,31 +18,35 @@ moment = Moment(app)
 app.config['SECRET_KEY'] = 'un string que funcione como llave'
 
 
-#Estas class son para el logueo 
+#Estas class son para el logueo------------------------------------------------------------------------------ 
 class MiFormulario(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
     password = StringField('Password:')
 
-#Esta class son para el registro de usuario
+#Esta class son para el registro de usuario-------------------------------------------------------------------
 class RegForm(FlaskForm):
     name = StringField('Username:', validators=[DataRequired()])
     password = StringField('Password:', validators=[DataRequired()])
     repassword = StringField('Enter password again:', validators=[DataRequired()])
     
 
-#Esta @app llama a la pagina principal
+#Esta @app llama a la pagina principal-------------------------------------------------------------------------
 @app.route('/')
 def index():
     return render_template('index.html', fecha_actual=datetime.utcnow())
 
 #Saludar es lista de clientes-------------------------------------------------------------------------------------
 @app.route('/clientes', methods=['GET', 'POST'])
-def saludar():
-    """formulario = SaludarForm()
-    if formulario.validate_on_submit():
-        print(formulario.usuario.name)
-        return redirect(url_for('saludar_persona', usuario=formulario.usuario.data))"""
-    return render_template('clientes.html')#, form=formulario)
+def listaclientes():
+
+    with open(archivo.csv) as archivo:
+        lecturadecsv = csv.reader(archivo)
+        juntarinfo = list(lecturadecsv)
+        contenido = []
+        for linea in juntarinfo:
+            if linea[2]!="":
+                contenido.append(linea[2])
+    return render_template('clientes.html', listar = contenido)
 
 
 #Este @app es de productos-----------------------------------------------------------------------------------------------------
