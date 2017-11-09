@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from datetime import datetime
-from flask import Flask, render_template, redirect, flash, session
-#from flask import Flask, render_template, redirect, flash, session, url_for, #flash
+from flask import Flask, render_template, redirect, url_for, flash, session
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_script import Manager
@@ -28,32 +27,60 @@ class RegForm(FlaskForm):
     name = StringField('Username:', validators=[DataRequired()])
     password = StringField('Password:', validators=[DataRequired()])
     repassword = StringField('Enter password again:', validators=[DataRequired()])
-    
+
 
 #Esta @app llama a la pagina principal-------------------------------------------------------------------------
 @app.route('/')
 def index():
     return render_template('index.html', fecha_actual=datetime.utcnow())
 
-#Saludar es lista de clientes-------------------------------------------------------------------------------------
-@app.route('/clientes', methods=['GET', 'POST'])
-def listaclientes():
 
-    with open(archivo.csv) as archivo:
-        lecturadecsv = csv.reader(archivo)
-        juntarinfo = list(lecturadecsv)
-        contenido = []
-        for linea in juntarinfo:
-            if linea[2]!="":
-                contenido.append(linea[2])
-    return render_template('clientes.html', listar = contenido)
+#usuario
+@app.route('/usuario', methods =['GET', 'POST'])
+def saludar():
+    mi_formulario = MiFormulario()
+    if mi_formulario.validate_on_submit():
+        return "Funciono"
+    return render_template('usuario.html', form=mi_formulario)
 
 
 #Este @app es de productos-----------------------------------------------------------------------------------------------------
 
 @app.route('/productos')
-def proctos():
-    return render_template('productos.html')#, nombre=usuario)
+def productos():
+    
+    with open ('archivo.csv') as f:
+        reader = csv.reader(f) #(csvfile)
+        next(reader)
+        lista = list(reader)
+    return render_template('productos.html',lista=lista)#archivo_csv = archivo_csv, ,#cliente=cliente
+
+#consultas listar productos que compro un cliente----------------------------------------------------------------------------
+@app.route('/clientes')
+def clientes():
+    with open('archivo.csv') as f:
+        reader = csv.reader(f)
+        cliente = 'FARMACIA NUEVA CHINGOLO'
+        producto = []    
+        for line in reader:
+            if line [2] == cliente:
+                producto.append(line[1])
+    return render_template('clientes.html', producto=producto, cliente=cliente)
+
+#listar todos los determinados clientes que compraron un determinado producto----------------------------------------------------------
+@app.route('/ProductosClientes')
+def producto():
+    with open ('archivo.csv') as f:
+        reader = csv.reader(f)
+        producto = 'ALIVIOL3400' 
+        #archivo_csv = csv.reader(csvfile)
+        cliente = []
+        #lista = list(reader)
+        for line in archivo_csv:
+            if line [1] == producto:
+                cliente.append(line[2])
+    return render_template('compras.html',producto=producto, cliente=cliente)  
+  
 
 
 #Ingresar es Precios-----------------------------------------------------------------------------------------------------------
@@ -75,10 +102,10 @@ def ingresar():
                 return redirect(url_for('ingresar'))
     return render_template('precios.html')#, formulario=formulario)
 
-#Esta @app es para registrarse
+#Esta @app es para registrarse------------------------------------------------------------------------------------------------
 @app.route('/registrar', methods=['GET', 'POST'])
 def registrar():
-    """formulario = RegistrarForm()
+    formulario = RegistrarForm()
     if formulario.validate_on_s-ubmit():
         if formulario.password.data == formulario.password_check.data:
             with open('usuarios', 'a+') as archivo:
@@ -88,8 +115,9 @@ def registrar():
             flash('Usuario creado correctamente')
             return redirect(url_for('ingresar'))
         else:
-            flash('Las passwords no matchean')"""
-    return render_template('registrar.html')#, form=formulario)
+            flash('Las passwords no matchean')
+     
+    return render_template('registrar.html'), form=formulario)
 
 
 @app.route('/secret', methods=['GET'])
@@ -104,11 +132,11 @@ def logout():
     if 'username' in session:
         session.pop('username')
         return render_template('logged_out.html')
-    """else:
-        return redirect(url_for('index'))"""
+    else:
+        return redirect(url_for('index')
 
 
-#Estos dos @app son para los errores
+#Estos dos @app son para los errores----------------------------------------------------------------------
 @app.errorhandler(404)
 def no_encontrado(e):
     return render_template('404.html'), 404

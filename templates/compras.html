@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Clientes{% endblock %}
+{% block title %}Compras{% endblock %}
 {% block page_content %}
 
 <div class="page-header">
-    <h1>Lista de clientes!
+    <h1>Lista de compras!
  <table class="table table-bordered table-hover">
  <thead>
     <tr>
@@ -16,16 +16,21 @@
     </tr>
 </thead>
 <tbody>
-        {% for campo in producto %} 
+        {% for campo in cliente %} 
         </tr>
             <td>{{campo}}</td>
-            <td>{{cliente}}</td>
+            <td>{{producto}}</td>
         </tr>
         {% endfor %}
 </tbody>
 </table>
 </div>
 {% endblock %}
+
+
+
+ 
+ 
 
 
 
