@@ -1,17 +1,18 @@
+
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Productos por Clientes{% endblock %}
+{% block title %}Clientes por Productos{% endblock %}
 {% block page_content %}
 
 <div class="page-header">
-    <h1>Productos por Clientes!</h1>
+    <h1> Clientes por Productos!</h1>
 
-<form autocomplete="off" method="POST" action="/clientes">
+<form autocomplete="off" method="POST" action="/ProductoCliente">
 {{form.autocompletar(list="id_datalist", size=40)}}
 <datalist id= "id_datalist">
-{% for cliente in listaClientes %}
-	<option value= '{{ cliente}}'>
+{% for producto in listaProductos %}
+	<option value= '{{ producto}}'>
 {% endfor %}
 </datalist>
 {{ form.enviar }}

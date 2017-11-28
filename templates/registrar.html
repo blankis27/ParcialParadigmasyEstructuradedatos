@@ -1,10 +1,13 @@
-{% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
-
+{% extends "base2.html" %}
 {% block title %}Registrarse{% endblock %}
-
 {% block page_content %}
-<div class="page-header">    
-    {{ wtf.quick_form(form) }}
-</div>
+<form method="POST" action="/registrar">
+    {{ form.csrf_token }}    
+    {{ form.usuario.label }} {{ form.usuario(size=20) }}
+    {{ form.csrf_token }}    
+    {{ form.password.label }} {{ form.password(size=20) }}
+    {{ form.csrf_token }}    
+    {{ form.repassword.label }} {{ form.repassword(size=20) }}
+    <input type="submit" value="Login">
+</form>
 {% endblock %}
