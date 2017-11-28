@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 {% extends "base2.html" %}
+=======
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+>>>>>>> 227eec2f60f3290af5c1c6ef201955276cdab622
 
 {% block title %}Ingrese{% endblock %}
 
 {% block page_content %}
+<<<<<<< HEAD
 <form method="POST" action="/">
     {{ form.csrf_token }}    
     {{ form.name.label }} {{ form.name(size=20) }}
@@ -10,4 +16,9 @@
     {{ form.password.label }} {{ form.password(size=20) }}    
     <input type="submit" value="Login">
 </form>
+=======
+<div class="page-header">    
+    {{ wtf.quick_form(formulario) }}
+</div>
+>>>>>>> 227eec2f60f3290af5c1c6ef201955276cdab622
 {% endblock %}

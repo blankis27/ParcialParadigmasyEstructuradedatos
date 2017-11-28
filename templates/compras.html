@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
+<<<<<<< HEAD
 {% block title %}Mejores Clientes{% endblock %}
 {% block page_content %}
 
@@ -13,18 +14,50 @@
     <tr> <td><strong>Monto</strong></td>
         <td><strong>Cliente</strong></td>
         
+=======
+{% block title %}Compras{% endblock %}
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Lista de compras!
+ <table class="table table-bordered table-hover">
+ <thead>
+    <tr>
+        
+        <td><strong>Producto</strong></td>
+        <td><strong>Cliente</strong></td>
+>>>>>>> 227eec2f60f3290af5c1c6ef201955276cdab622
          
     </tr>
 </thead>
 <tbody>
+<<<<<<< HEAD
     {% for linea in cliente_mas_gasto %}
         </tr>
         {% for campo in linea %} 
             <td>{{campo}}</td>
         {% endfor %}
     {% endfor %}
+=======
+        {% for campo in cliente %} 
+        </tr>
+            <td>{{campo}}</td>
+            <td>{{producto}}</td>
+        </tr>
+        {% endfor %}
+>>>>>>> 227eec2f60f3290af5c1c6ef201955276cdab622
 </tbody>
 </table>
 </div>
 {% endblock %}
 
+<<<<<<< HEAD
+=======
+
+
+ 
+ 
+
+
+
+>>>>>>> 227eec2f60f3290af5c1c6ef201955276cdab622
